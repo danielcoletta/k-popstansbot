@@ -24,7 +24,7 @@ def playlist(message):
     bot.reply_to(message, "https://open.spotify.com/playlist/1GTP7dHqs9mKNoyZGCb8kt?si=e2dc42eac26342d3")
 
 def check_for_link(message):
-    return "https://" in message.text
+    return "https://" and "track" in message.text
 
 @bot.message_handler(func=check_for_link)
 def send_link(message):
