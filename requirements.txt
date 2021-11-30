@@ -1,0 +1,4 @@
+spotipy
+telebot
+re
+spotipy.oauth2
