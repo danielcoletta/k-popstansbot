@@ -19,35 +19,37 @@ bot = telebot.TeleBot(API_KEY)
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(username=USER_ID, scope=scope, client_id=CLIENT_ID, client_secret=CLIENT_SECRET, redirect_uri=REDIRECT_URI))
 
-@bot.message_handler(commands=['playlist' or 'Playlist'])
+@bot.message_handler(commands=['playlist'])
 def playlist(message):
     bot.reply_to(message, "https://open.spotify.com/playlist/1GTP7dHqs9mKNoyZGCb8kt?si=e2dc42eac26342d3")
 
 def check_for_link(message):
-    https = "https://"
-    link = message.text
-    #print (message.text)
-    if https in link:
-        return True
-    else:
-        return False
+    return "https://" in message.text
 
 @bot.message_handler(func=check_for_link)
 def send_link(message):
-    data = message.text
-    url = re.search("(?P<url>https?://[^\s]+)", data).group("url") 
+    url = re.search("(?P<url>https?://[^\s]+)", message.text).group("url")
     if "spotify" in url:
         bot.reply_to (message, "bet")
-        url = message.text
-        start = url.find("track/") + len("track/")
-        end = url.find("?")
-        prefix = str("spotify:track:")
-        track = url[start:end]
-        uri = [prefix + track]
-        sp.user_playlist_add_tracks(user = USER_ID, playlist_id = PLAYLIST_ID, tracks = uri)
+        uri = extract_uri(message.text)
+        add_track(uri)
     
     else:
         bot.reply_to (message, "Please send a Spotify link")
-        return False
 
-bot.polling()
+def extract_uri(url):
+    start = url.find("track/") + len("track/")
+    end = url.find("?")
+    prefix = str("spotify:track:")
+    track = url[start:end]
+    uri = [prefix + track]
+    return uri
+
+def add_track(uri):
+    sp.user_playlist_add_tracks(user = USER_ID, playlist_id = PLAYLIST_ID, tracks = uri)
+
+def main():
+    bot.polling()
+
+if __name__ == "__main__":
+    main()
