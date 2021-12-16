@@ -41,6 +41,7 @@ def extract_uri(url):
     start = url.find("track/") + len("track/")
     end = url.find("?")
     prefix = str("spotify:track:")
+    
     track = url[start:end]
     uri = [prefix + track]
     return uri
