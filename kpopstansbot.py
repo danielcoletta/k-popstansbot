@@ -1,8 +1,11 @@
+from requests.models import HTTPError
+from spotipy.exceptions import SpotifyException
 import telebot
 import os
 import re
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+from spotipy.oauth2 import SpotifyClientCredentials
 import secret
 
 API_KEY = secret.API_KEY
@@ -18,6 +21,8 @@ scope = "playlist-modify-private"
 bot = telebot.TeleBot(API_KEY)
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(username=USER_ID, scope=scope, client_id=CLIENT_ID, client_secret=CLIENT_SECRET, redirect_uri=REDIRECT_URI))
+auth_manager = SpotifyOAuth(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, scope=scope)
+sp = spotipy.Spotify(auth_manager=auth_manager)
 
 @bot.message_handler(commands=['playlist'])
 def playlist(message):
@@ -29,19 +34,25 @@ def check_for_link(message):
 @bot.message_handler(func=check_for_link)
 def send_link(message):
     url = re.search("(?P<url>https?://[^\s]+)", message.text).group("url")
-    if "spotify" in url:
-        bot.reply_to (message, "bet")
-        uri = extract_uri(message.text)
-        add_track(uri)
-    
-    else:
-        bot.reply_to (message, "Please send a Spotify link")
+    try:
+        if "spotify" in url:
+            uri= extract_uri(message.text)
+            add_track(uri)
+            bot.reply_to (message, "bet")
+        else:
+            bot.reply_to (message, "Get good, send a Spotify link")
+
+    except (HTTPError):
+        if HTTPError.code == 403 or HTTPError.code == 401:
+            bot.reply_to (message, "There was an error with Spotify authentication, fuck you Spotify for not letting me use token-based authentication")
+
+    except: 
+        bot.reply_to (message, "There was an issue adding the track, send the right link you simp")
 
 def extract_uri(url):
     start = url.find("track/") + len("track/")
     end = url.find("?")
-    prefix = str("spotify:track:")
-    
+    prefix = str("spotify:track:")   
     track = url[start:end]
     uri = [prefix + track]
     return uri
