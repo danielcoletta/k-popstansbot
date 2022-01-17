@@ -8,7 +8,7 @@ from spotipy.oauth2 import SpotifyOAuth
 from spotipy.oauth2 import SpotifyClientCredentials
 #import secret
 
-API_KEY = os.environ.get('API_KEY')
+API_KEY = "2139263734:AAFPS2uGit79Wr6HsmsR669Na7z8Vu6HKdA"
 CLIENT_ID = os.environ.get('CLIENT_ID')
 CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
 REDIRECT_URI = os.environ.get('REDIRECT_URI') 
