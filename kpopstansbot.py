@@ -11,7 +11,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 API_KEY = "2139263734:AAFPS2uGit79Wr6HsmsR669Na7z8Vu6HKdA"
 CLIENT_ID = os.environ.get('CLIENT_ID')
 CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
-REDIRECT_URI = "https://k-pop-stans-bot.herokuapp.com/" 
+REDIRECT_URI = "https://k-pop-stans-bot.herokuapp.com/callback/" 
 PLAYLIST_ID = os.environ.get('PLAYLIST_ID')
 USER_ID = os.environ.get('USER_ID')
 
