@@ -6,7 +6,7 @@ import re
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from spotipy.oauth2 import SpotifyClientCredentials
-import secret
+#import secret
 
 API_KEY = secret.API_KEY
 CLIENT_ID = secret.CLIENT_ID
