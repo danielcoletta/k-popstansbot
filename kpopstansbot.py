@@ -8,12 +8,12 @@ from spotipy.oauth2 import SpotifyOAuth
 from spotipy.oauth2 import SpotifyClientCredentials
 #import secret
 
-os.environ.get('API_KEY') = secret.API_KEY
-os.environ.get('CLIENT_ID')= secret.CLIENT_ID
-os.environ.get('CLIENT_SECRET') =  secret.CLIENT_SECRET
-os.environ.get('REDIRECT_URI') =  secret.REDIRECT_URI   
-os.environ.get('PLAYLIST_ID') = secret.PLAYLIST_ID
-os.environ.get('USER_ID') = secret.USER_ID
+os.environ.get('API_KEY') == secret.API_KEY
+os.environ.get('CLIENT_ID')== secret.CLIENT_ID
+os.environ.get('CLIENT_SECRET') ==  secret.CLIENT_SECRET
+os.environ.get('REDIRECT_URI') ==  secret.REDIRECT_URI   
+os.environ.get('PLAYLIST_ID') == secret.PLAYLIST_ID
+os.environ.get('USER_ID') == secret.USER_ID
 
 response_type = "code"
 scope = "playlist-modify-private"
